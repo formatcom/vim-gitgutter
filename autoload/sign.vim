@@ -146,7 +146,9 @@ function! sign#upsert_new_gitgutter_signs(file_name, modified_lines)
       let name = utility#highlight_name_for_change(line[1])
       if !has_key(old_gitgutter_signs, line_number)  " insert
         let id = sign#next_sign_id()
-        execute "sign place" id "line=" . line_number "name=" . name "file=" . a:file_name
+	if line_number > 0
+	  execute "sign place" id "line=" . line_number "name=" . name "file=" . a:file_name
+	end
       else  " update if sign has changed
         let old_sign = old_gitgutter_signs[line_number]
         if old_sign.name !=# name
